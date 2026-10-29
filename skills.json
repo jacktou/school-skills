@@ -255,6 +255,25 @@
             "type": "number"
           }
         }
+      },
+      "confirm_before_live": true,
+      "confirm_card": {
+        "required_user_action": "explicit_confirm",
+        "fields": [
+          "pair",
+          "side",
+          "size",
+          "price",
+          "fee",
+          "est_fill"
+        ],
+        "cancel_stops": true,
+        "notes": "OKX Confirming: show preview from trade_quote; live sign only after user confirms"
+      },
+      "rules": {
+        "read_only": true,
+        "places_order": false,
+        "login_required": false
       }
     },
     {
@@ -343,8 +362,13 @@
   ],
   "cli_status_fields": [
     "mode",
-    "key",
+    "auth",
+    "has_jwt",
+    "expires_at",
     "last_call"
   ],
-  "figma": "https://www.figma.com/design/UMd2PuvLvBmfvzLiUyCSmu/%E5%AD%A6%E4%B9%A0demo"
+  "figma": "https://www.figma.com/design/UMd2PuvLvBmfvzLiUyCSmu/%E5%AD%A6%E4%B9%A0demo",
+  "cli_status_deprecated": [
+    "key"
+  ]
 }
