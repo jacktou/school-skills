@@ -2,12 +2,42 @@
   "name": "school-skills",
   "version": "0.1.0",
   "description": "School.fun AI agent skills — mapped to site modules, not GMGN clones",
-  "groups": ["research", "markets", "trade", "vault", "listing"],
+  "groups": [
+    "research",
+    "markets",
+    "trade",
+    "vault",
+    "listing"
+  ],
   "auth": {
     "wallet_login": {
       "id": "wallet_login",
       "provider": "privy",
-      "notes": "CLI/frontend only; skills use session or API key, never private keys"
+      "flow": "init_poll",
+      "cli": {
+        "init": "school login --init",
+        "poll": "school login --poll --session <sessionId>",
+        "paper": "school login --paper",
+        "status": "school status",
+        "logout": "school logout"
+      },
+      "outputs": [
+        "phase",
+        "loginUrl",
+        "sessionId",
+        "mode",
+        "auth",
+        "has_jwt",
+        "expires_at",
+        "address"
+      ],
+      "never_expose": [
+        "privy_token",
+        "jwt",
+        "private_key",
+        "mnemonic"
+      ],
+      "notes": "OKX-style browser login; Agent shows loginUrl only; DEBUG --token is not product UX"
     }
   },
   "skills": [
@@ -19,21 +49,46 @@
       "input": {
         "type": "object",
         "properties": {
-          "min_mcap": { "type": "number", "default": 1000000 },
-          "limit": { "type": "integer", "default": 20, "maximum": 50 }
+          "min_mcap": {
+            "type": "number",
+            "default": 1000000
+          },
+          "limit": {
+            "type": "integer",
+            "default": 20,
+            "maximum": 50
+          }
         }
       },
       "output": {
         "type": "array",
         "items": {
           "type": "object",
-          "required": ["symbol", "mcap", "alpha"],
+          "required": [
+            "symbol",
+            "mcap",
+            "alphaScore"
+          ],
           "properties": {
-            "symbol": { "type": "string" },
-            "ca": { "type": "string" },
-            "mcap": { "type": "number" },
-            "alpha": { "type": "number" },
-            "tags": { "type": "array", "items": { "type": "string" } }
+            "symbol": {
+              "type": "string"
+            },
+            "ca": {
+              "type": "string"
+            },
+            "mcap": {
+              "type": "number"
+            },
+            "alphaScore": {
+              "type": "number",
+              "description": "Alpha score from kuant radar tokens (GET /api/v1/radar/pool/meme item report.total; activity events also accept total|score|alphaScore). SkillCard and ToolCallResult only. Not a vault_list field."
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         }
       }
@@ -46,31 +101,79 @@
       "input": {
         "type": "object",
         "oneOf": [
-          { "required": ["ca"] },
-          { "required": ["name"] }
+          {
+            "required": [
+              "ca"
+            ]
+          },
+          {
+            "required": [
+              "name"
+            ]
+          }
         ],
         "properties": {
-          "ca": { "type": "string" },
-          "name": { "type": "string" }
+          "ca": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
         }
       },
       "output": {
         "type": "object",
         "properties": {
-          "symbol": { "type": "string" },
-          "ca": { "type": "string" },
-          "alpha": { "type": "number" },
-          "milestones": { "type": "array", "items": { "type": "string" } },
-          "narrative": { "type": "string" },
+          "symbol": {
+            "type": "string"
+          },
+          "ca": {
+            "type": "string"
+          },
+          "milestones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "narrative": {
+            "type": "string"
+          },
           "social": {
             "type": "object",
             "description": "Optional; omit or null fields when no evidence",
             "properties": {
-              "x_mentions_24h": { "type": ["integer", "null"] },
-              "narrative_tags": { "type": "array", "items": { "type": "string" } },
-              "kol_handles": { "type": "array", "items": { "type": "string" } },
-              "sentiment": { "enum": ["bull", "mixed", "bear", null] }
+              "x_mentions_24h": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "narrative_tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "kol_handles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sentiment": {
+                "enum": [
+                  "bull",
+                  "mixed",
+                  "bear",
+                  null
+                ]
+              }
             }
+          },
+          "alphaScore": {
+            "type": "number",
+            "description": "Same kuant Alpha score as alpha_radar; prefer alphaScore. Do not invent if radar/lookup miss."
           }
         }
       }
@@ -82,18 +185,31 @@
       "description": "School.fun security flags for a contract",
       "input": {
         "type": "object",
-        "required": ["ca"],
+        "required": [
+          "ca"
+        ],
         "properties": {
-          "ca": { "type": "string" }
+          "ca": {
+            "type": "string"
+          }
         }
       },
       "output": {
         "type": "object",
         "properties": {
-          "renounced": { "type": "boolean" },
-          "blacklist": { "type": "boolean" },
-          "tax": { "type": "number" },
-          "top10": { "type": "number", "description": "Top10 holder percent" }
+          "renounced": {
+            "type": "boolean"
+          },
+          "blacklist": {
+            "type": "boolean"
+          },
+          "tax": {
+            "type": "number"
+          },
+          "top10": {
+            "type": "number",
+            "description": "Top10 holder percent"
+          }
         }
       }
     },
@@ -104,19 +220,40 @@
       "description": "Read-only spot/perp quote from School.fun markets",
       "input": {
         "type": "object",
-        "required": ["pair", "side", "size"],
+        "required": [
+          "pair",
+          "side",
+          "size"
+        ],
         "properties": {
-          "pair": { "type": "string" },
-          "side": { "enum": ["buy", "sell", "long", "short"] },
-          "size": { "type": "number" }
+          "pair": {
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "buy",
+              "sell",
+              "long",
+              "short"
+            ]
+          },
+          "size": {
+            "type": "number"
+          }
         }
       },
       "output": {
         "type": "object",
         "properties": {
-          "price": { "type": "number" },
-          "fee": { "type": "number" },
-          "est_fill": { "type": "number" }
+          "price": {
+            "type": "number"
+          },
+          "fee": {
+            "type": "number"
+          },
+          "est_fill": {
+            "type": "number"
+          }
         }
       }
     },
@@ -127,20 +264,43 @@
       "description": "Local simulated fill only; never signs or hits chain. Live requires Privy separately.",
       "input": {
         "type": "object",
-        "required": ["pair", "side", "size"],
+        "required": [
+          "pair",
+          "side",
+          "size"
+        ],
         "properties": {
-          "pair": { "type": "string" },
-          "side": { "enum": ["buy", "sell", "long", "short"] },
-          "size": { "type": "number" }
+          "pair": {
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "buy",
+              "sell",
+              "long",
+              "short"
+            ]
+          },
+          "size": {
+            "type": "number"
+          }
         }
       },
       "output": {
         "type": "object",
         "properties": {
-          "mode": { "const": "paper" },
-          "fill_price": { "type": "number" },
-          "size": { "type": "number" },
-          "pnl_sim": { "type": "number" }
+          "mode": {
+            "const": "paper"
+          },
+          "fill_price": {
+            "type": "number"
+          },
+          "size": {
+            "type": "number"
+          },
+          "pnl_sim": {
+            "type": "number"
+          }
         }
       }
     },
@@ -158,17 +318,33 @@
         "items": {
           "type": "object",
           "properties": {
-            "pool": { "type": "string" },
-            "apr": { "type": "number" },
-            "tvl": { "type": "number" },
-            "alpha_score": { "type": "number" },
-            "operator": { "type": "string" }
+            "pool": {
+              "type": "string"
+            },
+            "apr": {
+              "type": "number"
+            },
+            "tvl": {
+              "type": "number"
+            },
+            "operator": {
+              "type": "string"
+            }
           }
         }
       }
     }
   ],
-  "p1": ["spot_trade", "perp_trade", "vault_deposit", "listing_draft"],
-  "cli_status_fields": ["mode", "key", "last_call"],
+  "p1": [
+    "spot_trade",
+    "perp_trade",
+    "vault_deposit",
+    "listing_draft"
+  ],
+  "cli_status_fields": [
+    "mode",
+    "key",
+    "last_call"
+  ],
   "figma": "https://www.figma.com/design/UMd2PuvLvBmfvzLiUyCSmu/%E5%AD%A6%E4%B9%A0demo"
 }

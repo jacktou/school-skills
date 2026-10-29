@@ -12,7 +12,9 @@ Maps to School.fun **Alpha Research** ($1M+ pool), not GMGN.
 - `limit` (integer, default 20, max 50)
 
 ## Outputs
-Array of `{ symbol, ca?, mcap, alpha, tags[] }`.
+Array of `{ symbol, ca?, mcap, alphaScore, tags[] }`.
+
+`alphaScore` is the kuant token Alpha score (radar pool `report.total`; site column “Alpha scores”). Show it on the alpha_radar SkillCard and ToolCallResult. Do not copy it onto `vault_list`.
 
 ## Rules
 - Read-only. No wallet, no signing.

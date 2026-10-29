@@ -1,28 +1,23 @@
 ---
 name: alpha_transcript
-description: School.fun Alpha scorecard/transcript for one token by contract address or name. Use for Alpha detail, milestones, narrative, or security context for a single token.
+description: School.fun Alpha scorecard / transcript for one token. Use when the user asks for Alpha score details, milestones, or narrative for a named token or CA.
 ---
 
 # alpha_transcript
 
-Maps to School.fun **Alpha Research** transcript / scorecard.
+Maps to School.fun **Alpha Research** scorecard / transcript, not GMGN.
 
 ## Inputs
-Provide exactly one of:
-- `ca` (string) — contract address
-- `name` (string) — token name or symbol
+- `ca` (string) **or** `name` (string) — one required
 
 ## Outputs
-`{ symbol, ca, alpha, milestones[], narrative, social? }`
+`{ symbol, ca?, alphaScore, milestones[], narrative?, social? }`
 
-### social (optional, XBot fields)
-Only fill when evidence exists; otherwise omit or null:
-- `x_mentions_24h`
-- `narrative_tags[]`
-- `kol_handles[]` (handles with evidence only)
-- `sentiment`: `bull` | `mixed` | `bear`
+`alphaScore` matches `alpha_radar` (kuant). Always bind to the same chain as the CA — do not copy a trending row from another chain. If radar/lookup misses (`hit:false` / not in pool), say so and leave score null/omit — do not invent.
+
+`social` is optional: `{ x_mentions_24h, narrative_tags[], kol_handles[], sentiment }`. Omit or null fields when no evidence.
 
 ## Rules
-- Read-only.
-- Never invent KOL handles, mention counts, or sentiment.
-- Pair with `token_security` when the user asks about risk flags.
+- Read-only. No wallet, no signing.
+- Prefer live School.fun / kuant data; if unavailable, say so.
+- Never fabricate social metrics.

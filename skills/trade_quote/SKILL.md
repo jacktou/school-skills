@@ -16,5 +16,6 @@ Maps to School.fun **Spot & Perp** quote path.
 `{ price, fee, est_fill }`
 
 ## Rules
-- Read-only. Never places an order.
-- Live fills require `trade_paper` (sim) or P1 live trade + Privy.
+- Read-only. Never places an order. Login not required.
+- Before any live fill: show this preview as a **confirm card** (pair / side / size / price / fee / est_fill). Wait for explicit user「确认」; cancel stops. Aligns OKX Confirming.
+- Live fills require `wallet_login` success + P1 live trade skill. Paper path: `trade_paper`.
