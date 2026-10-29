@@ -367,8 +367,15 @@
     "expires_at",
     "last_call"
   ],
-  "figma": "https://www.figma.com/design/UMd2PuvLvBmfvzLiUyCSmu/%E5%AD%A6%E4%B9%A0demo",
+  "figma": "https://www.figma.com/design/UMd2PuvLvBmfvzLiUyCSmu/%E5%AD%A6%E4%B9%A0demo?node-id=69-2",
   "cli_status_deprecated": [
     "key"
-  ]
+  ],
+  "repos": {
+    "skills": "https://github.com/jacktou/school-skills",
+    "cli": "https://github.com/jacktou/school-cli",
+    "frontend_deeplink": "https://github.com/MoonPum/Building-Orderbook-DEX-Frontend-V2",
+    "dex_backend": "https://github.com/MoonPum/Building-Orderbook-DEX-V2",
+    "webapp_api": "https://github.com/MoonPum/ak47-webapp-api"
+  }
 }
