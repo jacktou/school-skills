@@ -376,6 +376,8 @@
     "cli": "https://github.com/jacktou/school-cli",
     "frontend_deeplink": "https://github.com/MoonPum/Building-Orderbook-DEX-Frontend-V2",
     "dex_backend": "https://github.com/MoonPum/Building-Orderbook-DEX-V2",
-    "webapp_api": "https://github.com/MoonPum/ak47-webapp-api"
+    "webapp_api": "https://github.com/MoonPum/ak47-webapp-api",
+    "frontend_deeplink_merged": "https://github.com/MoonPum/Building-Orderbook-DEX-Frontend-V2/pull/2",
+    "frontend_deeplink_sha": "7d96cc4"
   }
 }

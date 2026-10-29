@@ -21,7 +21,7 @@ School.fun AI agent skills — mapped to site modules (Alpha Research / Spot&Per
 
 ## Companions
 - CLI: `school-cli` (Worker) — `1fbe7dc`+ login init/poll
-- Frontend (deep-link): [Building-Orderbook-DEX-Frontend-V2](https://github.com/MoonPum/Building-Orderbook-DEX-Frontend-V2)
+- Frontend (deep-link): [Building-Orderbook-DEX-Frontend-V2](https://github.com/MoonPum/Building-Orderbook-DEX-Frontend-V2) — PR [#2](https://github.com/MoonPum/Building-Orderbook-DEX-Frontend-V2/pull/2) merged (`7d96cc4`); await live Privy e2e
 - DEX backend (`POST /v1/auth/privy`): [Building-Orderbook-DEX-V2](https://github.com/MoonPum/Building-Orderbook-DEX-V2)
 - Other API (kuant/webapp, not CLI callback): [ak47-webapp-api](https://github.com/MoonPum/ak47-webapp-api)
 - Design: [Figma 学习demo 登录四屏](https://www.figma.com/design/UMd2PuvLvBmfvzLiUyCSmu/%E5%AD%A6%E4%B9%A0demo?node-id=69-2)
